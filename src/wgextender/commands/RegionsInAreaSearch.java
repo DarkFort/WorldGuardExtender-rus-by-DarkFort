@@ -51,7 +51,7 @@ public class RegionsInAreaSearch {
 	protected static class NoSelectionException extends Exception {
 		private static final long serialVersionUID = 1L;
 		public NoSelectionException() {
-			super("Selection not found");
+			super("Выделение не найдено!");
 		}
 	}
 

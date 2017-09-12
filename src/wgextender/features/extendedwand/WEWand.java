@@ -26,7 +26,7 @@ import wgextender.WGExtender;
 
 public class WEWand {
 
-	private static final String WAND_NAME = ChatColor.LIGHT_PURPLE+"Selection wand";
+	private static final String WAND_NAME = ChatColor.LIGHT_PURPLE+"Топорик выделения";
 
 	@SuppressWarnings("deprecation")
 	public static ItemStack getWand() {

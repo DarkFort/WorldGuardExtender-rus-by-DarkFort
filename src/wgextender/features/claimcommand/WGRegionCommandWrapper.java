@@ -63,14 +63,14 @@ public class WGRegionCommandWrapper extends Command {
 			if (config.expandvert) {
 				boolean result = WEUtils.expandVert((Player) sender);
 				if (result) {
-					player.sendMessage(ChatColor.YELLOW + "Регион автоматически расширен по вертикали");
+					player.sendMessage(ChatColor.YELLOW + "Регион автоматически расширен по вертикали.");
 				}
 			}
 			ProcessedClaimInfo info = blocklimits.processClaimInfo(config, player);
 			if (!info.isClaimAllowed()) {
-				player.sendMessage(ChatColor.RED + "Вы не можете заприватить такой большой регион");
+				player.sendMessage(ChatColor.RED + "Вы не можете заприватить регион такого размера.");
 				if (!info.getMaxSize().equals("-1")) {
-					player.sendMessage(ChatColor.RED + "Ваш лимит: "+info.getMaxSize()+", вы попытались заприватить: "+info.getClaimedSize());
+					player.sendMessage(ChatColor.RED + "Максимальный размер: "+info.getMaxSize()+", размер твоего региона: "+info.getClaimedSize());
 				}
 				return true;
 			}

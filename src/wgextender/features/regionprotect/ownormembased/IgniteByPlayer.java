@@ -47,7 +47,7 @@ public class IgniteByPlayer implements Listener {
 				!WGRegionUtils.canBypassProtection(player) &&
 				!WGRegionUtils.canBuild(player, event.getBlock().getLocation())
 			) {
-				player.sendMessage(ChatColor.RED + "Вы не можете поджечь блок в чужом регионе");
+				player.sendMessage(ChatColor.RED + "Вы не можете поджечь блок в чужом регионе!");
 				event.setCancelled(true);
 			}
 		} else if (event.getCause() == IgniteCause.FIREBALL) {

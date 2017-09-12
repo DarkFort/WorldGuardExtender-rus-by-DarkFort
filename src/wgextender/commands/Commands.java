@@ -67,22 +67,22 @@ public class Commands implements CommandExecutor, TabCompleter {
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String label, String[] args) {
 		if (!canExecute(sender)) {
-			sender.sendMessage(ChatColor.RED+"Недостаточно прав");
+			sender.sendMessage(ChatColor.RED+"У Вас нет разрешения!");
 			return true;
 		}
 		if (args.length >= 1) {
 			switch (args[0].toLowerCase()) {
 				case "help": {
-					sender.sendMessage(ChatColor.BLUE + "wgex reload - перезагрузить конфиг");
-					sender.sendMessage(ChatColor.BLUE + "wgex search - ищет регионы в выделенной области");
-					sender.sendMessage(ChatColor.BLUE + "wgex setflag {world} {flag} {value}  - устанавливает флаг {flag} со значением {value} на все регионы в мире {world}");
-					sender.sendMessage(ChatColor.BLUE + "wgex removeowner {name} - удаляет игрока из списков владельцев всех регионов");
-					sender.sendMessage(ChatColor.BLUE + "wgex removemember {name} - удаляет игрока из списков членов всех регионов");
+					sender.sendMessage(ChatColor.GREEN + "wgex reload - Перезагрузить конфиг");
+					sender.sendMessage(ChatColor.GREEN + "wgex search - Поиск регионов в выделенной области");
+					sender.sendMessage(ChatColor.GREEN + "wgex setflag {world} {flag} {value}  - Установить флаг {flag} со значением {value} на все регионы в мире {world}");
+					sender.sendMessage(ChatColor.GREEN + "wgex removeowner {name} - Удалить игрока из списков владельцев всех регионов");
+					sender.sendMessage(ChatColor.GREEN + "wgex removemember {name} - Удалить игрока из списков участников всех регионов");
 					return true;
 				}
 				case "reload": {
 					config.loadConfig();
-					sender.sendMessage(ChatColor.BLUE + "Конфиг перезагружен");
+					sender.sendMessage(ChatColor.GREEN + "Конфиг перезагружен!");
 					return true;
 				}
 				case "search": {
@@ -90,12 +90,12 @@ public class Commands implements CommandExecutor, TabCompleter {
 						try {
 							List<String> regions = RegionsInAreaSearch.getRegionsInPlayerSelection((Player) sender);
 							if (regions.isEmpty()) {
-								sender.sendMessage(ChatColor.BLUE + "Регионов пересекающихся с выделенной зоной не найдено");
+								sender.sendMessage(ChatColor.GREEN + "Пересекающихся регионов с выделенной зоной не найдено!");
 							} else {
-								sender.sendMessage(ChatColor.BLUE + "Найдены регионы пересекающиеся с выделенной зоной: "+ regions);
+								sender.sendMessage(ChatColor.GREEN + "Найдены регионы пересекающиеся с выделенной зоной: "+ regions);
 							}
 						} catch (NoSelectionException e) {
-							sender.sendMessage(ChatColor.BLUE + "Сначала выделите зону поиска");
+							sender.sendMessage(ChatColor.RED + "Сначала выделите зону поиска!");
 						}
 						return true;
 					}
@@ -117,16 +117,16 @@ public class Commands implements CommandExecutor, TabCompleter {
 									}
 									AutoFlags.setFlag(world, region, flag, value);
 								}
-								sender.sendMessage(ChatColor.BLUE + "Флаги установлены");
+								sender.sendMessage(ChatColor.GREEN + "Флаги установлены!");
 							} catch (InvalidFlagFormat e) {
-								sender.sendMessage(ChatColor.BLUE + "Неправильное значение для флага "+flag.getName()+": "+e.getMessage());
+								sender.sendMessage(ChatColor.GREEN + "Неправильное значение для флага "+flag.getName()+": "+e.getMessage());
 							} catch (CommandException e) {
-								sender.sendMessage(ChatColor.BLUE + "Неправильный формат флага "+flag.getName()+": "+e.getMessage());
+								sender.sendMessage(ChatColor.GREEN + "Неправильный формат флага "+flag.getName()+": "+e.getMessage());
 							}
 						}
-						sender.sendMessage(ChatColor.BLUE + "Флаг не найден");
+						sender.sendMessage(ChatColor.RED + "Флаг не найден!");
 					} else {
-						sender.sendMessage(ChatColor.BLUE + "Мир не найден");
+						sender.sendMessage(ChatColor.RED + "Мир не найден!");
 					}
 					return true;
 				}
@@ -146,7 +146,7 @@ public class Commands implements CommandExecutor, TabCompleter {
 							region.setOwners(owners);
 						}
 					}
-					sender.sendMessage(ChatColor.BLUE + "Игрок удалён из списков владельцев всех регионов");
+					sender.sendMessage(ChatColor.GREEN + "Игрок удалён из списков владельцев всех регионов");
 					return true;
 				}
 				case "removemember": {
@@ -165,7 +165,7 @@ public class Commands implements CommandExecutor, TabCompleter {
 							region.setMembers(owners);
 						}
 					}
-					sender.sendMessage(ChatColor.BLUE + "Игрок удалён из списков членов всех регионов");
+					sender.sendMessage(ChatColor.GREEN + "Игрок удалён из списков владельцев всех регионов!");
 					return true;
 				}
 			}

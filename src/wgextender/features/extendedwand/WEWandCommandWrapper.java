@@ -55,7 +55,7 @@ public class WEWandCommandWrapper extends Command {
 		}
 		if (sender instanceof Player) {
 			((Player) sender).getInventory().addItem(WEWand.getWand());
-			sender.sendMessage(ChatColor.LIGHT_PURPLE+"Выдана вещь для выделения территории");
+			sender.sendMessage(ChatColor.LIGHT_PURPLE+"ЛКМ: установить точку #1; ПКМ: установить точку #2");
 		}
 		return true;
 	}

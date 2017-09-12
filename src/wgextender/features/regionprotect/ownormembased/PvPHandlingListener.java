@@ -81,12 +81,12 @@ public class PvPHandlingListener extends WGOverrideListener {
 		/* Hostile / ambient mob override */
 		if (Entities.isHostile(event.getEntity()) || Entities.isAmbient(event.getEntity()) || Entities.isVehicle(event.getEntity().getType())) {
 			canDamage = event.getRelevantFlags().isEmpty() || query.queryState(target, associable, combine(event)) != State.DENY;
-			what = "hit that";
+			what = "ударять это";
 
 			/* Paintings, item frames, etc. */
 		} else if (Entities.isConsideredBuildingIfUsed(event.getEntity())) {
 			canDamage = query.testBuild(target, associable, combine(event));
-			what = "change that";
+			what = "изменять это";
 
 			/* PVP */
 		} else if (pvp) {
@@ -123,17 +123,17 @@ public class PvPHandlingListener extends WGOverrideListener {
 			/* Player damage not caused by another player */
 		} else if (event.getEntity() instanceof Player) {
 			canDamage = event.getRelevantFlags().isEmpty() || query.queryState(target, associable, combine(event)) != State.DENY;
-			what = "damage that";
+			what = "наносить урон";
 
 			/* damage to non-hostile mobs (e.g. animals) */
 		} else if (Entities.isNonHostile(event.getEntity())) {
 			canDamage = query.testBuild(target, associable, combine(event, DefaultFlag.DAMAGE_ANIMALS));
-			what = "harm that";
+			what = "наносить урон";
 
 			/* Everything else */
 		} else {
 			canDamage = query.testBuild(target, associable, combine(event, DefaultFlag.INTERACT));
-			what = "hit that";
+			what = "наносить урон";
 		}
 
 		if (!canDamage) {

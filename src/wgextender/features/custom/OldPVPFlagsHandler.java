@@ -100,7 +100,7 @@ public class OldPVPFlagsHandler implements Listener {
 					double absorbtionModifier = func.get(DamageModifier.ABSORPTION).apply(damage);
 					event.setDamage(DamageModifier.ABSORPTION, absorbtionModifier);
 				} catch (IllegalArgumentException | IllegalAccessException e) {
-					WGExtender.getInstance().getLogger().log(Level.SEVERE, "Unable to recalculate blocking damage", e);
+					WGExtender.getInstance().getLogger().log(Level.SEVERE, "Не удалось перетащить блокирование региона", e);
 				}
 			}
 		}

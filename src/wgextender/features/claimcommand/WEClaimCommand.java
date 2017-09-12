@@ -49,7 +49,7 @@ public class WEClaimCommand {
 		if (!permModel.mayClaimRegionsUnbounded()) {
 			int maxRegionCount = wcfg.getMaxRegionCount(player);
 			if (maxRegionCount >= 0 && manager.getRegionCountOfPlayer(localPlayer) >= maxRegionCount) {
-				throw new CommandException("У вас слишком много регионов, удалите один из них перед тем как заприватить новый.");
+				throw new CommandException("У вас слишком много регионов, удалите ненужный.");
 			}
 		}
 
@@ -57,7 +57,7 @@ public class WEClaimCommand {
 
 		if (existing != null) {
 			if (!existing.getOwners().contains(localPlayer)) {
-				throw new CommandException("Регион уже существует, и вы им не владеете.");
+				throw new CommandException("Такой регион уже существует.");
 			}
 		}
 
@@ -65,16 +65,16 @@ public class WEClaimCommand {
 
 		if (regions.size() > 0) {
 			if (!regions.isOwnerOfAll(localPlayer)) {
-				throw new CommandException("Это регион перекрывает чужой регион.");
+				throw new CommandException("Это регион пересекается с чужим регионом.");
 			}
 		} else {
 			if (wcfg.claimOnlyInsideExistingRegions) {
-				throw new CommandException("Вы можете приватить только внутри своих регионов.");
+				throw new CommandException("Вы можете приватить только внутри своих регионов, которые принадлежат вам или вашей группе.");
 			}
 		}
 
 		if (wcfg.maxClaimVolume >= Integer.MAX_VALUE) {
-			throw new CommandException("The maximum claim volume get in the configuration is higher than is supported. " + "Currently, it must be " + Integer.MAX_VALUE + " or smaller. Please contact a server administrator.");
+			throw new CommandException("Этот регион слишком большой. " + "Максимальный размер: " + Integer.MAX_VALUE);
 		}
 
 		if (!permModel.mayClaimRegionsUnbounded()) {
@@ -83,8 +83,8 @@ public class WEClaimCommand {
 			}
 
 			if (region.volume() > wcfg.maxClaimVolume) {
-				player.sendMessage(ChatColor.RED + "Размер региона слишком большой.");
-				player.sendMessage(ChatColor.RED + "Максимальный размер: " + wcfg.maxClaimVolume + ", ваш размер: " + region.volume());
+				player.sendMessage(ChatColor.RED + "Вы не можете заприватить регион такого размера.");
+				player.sendMessage(ChatColor.RED + "Максимальный размер: " + wcfg.maxClaimVolume + ", размер твоего региона: " + region.volume());
 				return;
 			}
 		}
@@ -94,20 +94,20 @@ public class WEClaimCommand {
 		task.setOwnersInput(new String[] { player.getName() });
 		try {
 			task.call();
-			sender.sendMessage(ChatColor.YELLOW + "Вы заприватили регион "+id);
+			sender.sendMessage(ChatColor.YELLOW + "Новый регион '"+id+"' создан.");
 		} catch (Exception e) {
-			sender.sendMessage(ChatColor.YELLOW + "Произошла ошибка при привате региона "+id);
+			sender.sendMessage(ChatColor.YELLOW + "Не удалось создать регион '"+id+"'.");
 			e.printStackTrace();
 		}
 	}
 
 	private static String checkRegionId(String id, boolean allowGlobal) throws CommandException {
 		if (!ProtectedRegion.isValidId(id)) {
-			throw new CommandException("Имя региона '" + id + "' содержит запрещённые символы.");
+			throw new CommandException("Название региона '" + id + "' содержит запрещённые символы.");
 		}
 
 		if (!allowGlobal && id.equalsIgnoreCase("__global__")) {
-			throw new CommandException("Нельзя заприватить __global__.");
+			throw new CommandException("Вы не можете использовать глобальный регион.");
 		}
 
 		return id;
@@ -124,7 +124,7 @@ public class WEClaimCommand {
 
 		RegionManager manager = plugin.getRegionContainer().get(world);
 		if (manager == null) {
-			throw new CommandException("Не удалось загрузить данные регионов. Позовите админа, пусть постучит в бубен и починит это.");
+			throw new CommandException("Не удалось загрузить регион для данного мира. Пожалуйста, сообщите администратору сервера.");
 		}
 		return manager;
 	}
@@ -141,7 +141,7 @@ public class WEClaimCommand {
 			BlockVector max = selection.getNativeMaximumPoint().toBlockVector();
 			return new ProtectedCuboidRegion(id, min, max);
 		} else {
-			throw new CommandException("Sorry, you can only use cuboids and polygons for WorldGuard regions.");
+			throw new CommandException("Извините, только кубоиды и полигоны могут быть регионами в WorldGuard.");
 		}
 	}
 
@@ -150,7 +150,7 @@ public class WEClaimCommand {
 		Selection selection = worldEdit.getSelection(player);
 
 		if (selection == null) {
-			throw new CommandException("Сначала выделите территорию. " + "Используйте WorldEdit для выделения " + "(wiki: http://wiki.sk89q.com/wiki/WorldEdit).");
+			throw new CommandException("Вы не выделили область для привата региона.");
 		}
 
 		return selection;
@@ -158,7 +158,7 @@ public class WEClaimCommand {
 
 	private static void checkRegionDoesNotExist(RegionManager manager, String id, boolean mayRedefine) throws CommandException {
 		if (manager.hasRegion(id)) {
-			throw new CommandException("Регион с таким именем уже существует, выберите другое.");
+			throw new CommandException("Регион с таким именем уже существует. Пожалуйста, выберите другое имя.");
 		}
 	}
 
