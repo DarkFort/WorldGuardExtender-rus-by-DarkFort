@@ -118,7 +118,7 @@ public class PvPHandlingListener extends WGOverrideListener {
 				canDamage = true;
 			}
 
-			what = "PvP";
+			what = "драться";
 
 			/* Player damage not caused by another player */
 		} else if (event.getEntity() instanceof Player) {
