@@ -80,7 +80,7 @@ public class Commands implements CommandExecutor, TabCompleter {
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String label, String[] args) {
 		if (!sender.hasPermission("wgextender.admin")) {
-			sender.sendMessage(ChatColor.RED+"У Вас нет разрешения!"");
+			sender.sendMessage(ChatColor.RED+"У Вас нет разрешения!");
 			return true;
 		}
 		if (args.length >= 1) {
